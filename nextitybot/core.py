@@ -1,9 +1,7 @@
-import aiohttp
 import nextcord
 from nextcord.ext import commands, tasks
 import itertools
 import logging
-import time
 from typing import Optional
 
 logging.basicConfig(level=logging.INFO)
@@ -21,7 +19,7 @@ async def presence_show_information(bot: "NextityBot") -> Presence:
     )
 
 class NextityBot(commands.AutoShardedBot):
-    presences_iterator: itertools.cycle # cannot be annotated at 26.08.2023
+    presences_iterator: itertools.cycle # cannot be annotated at 26.08.2023 (yeah, i was writing another bot.)
     updated_count: int
     logger: logging.Logger
     def __init__(self) -> None:
