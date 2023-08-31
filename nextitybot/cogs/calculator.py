@@ -1,7 +1,6 @@
 import aiohttp
 import nextcord
 from nextcord.ext import commands
-import numpy
 from ..core import NextityBot
 from ..utils import itoa, atoi
 from typing import Callable, Protocol, Optional
