@@ -1,9 +1,8 @@
-import aiohttp
 import nextcord
 from nextcord.ext import commands
 from ..core import NextityBot
 from ..utils import itoa, atoi
-from typing import Callable, Protocol, Optional
+from typing import Callable
 
 class CalculatorAddModal(nextcord.ui.Modal):
     def __init__(self, view: "CalculatorView") -> None:
