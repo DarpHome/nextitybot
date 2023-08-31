@@ -6,10 +6,10 @@ from typing import Optional
 class UserButton(nextcord.ui.Button):
     def __init__(
         self,
-        style: nextcord.ButtonStyle,
-        emoji: Optional[str],
-        label: Optional[str],
         response: str,
+        style: nextcord.ButtonStyle,
+        emoji: Optional[str] = None,
+        label: Optional[str] = None,
     ) -> None:
         super().__init__(
             style=style,
@@ -28,17 +28,33 @@ class UserButton(nextcord.ui.Button):
 class UserButtonView(nextcord.ui.View):
     def __init__(
         self,
-        style: nextcord.ButtonStyle,
-        emoji: Optional[str],
-        label: Optional[str],
         response: str,
+        style: nextcord.ButtonStyle,
+        emoji: Optional[str] = None,
+        label: Optional[str] = None,
     ) -> None:
         super().__init__(timeout=None, auto_defer=False)
         self.add_item(UserButton(
+            response=response,
             style=style,
             emoji=emoji,
             label=label,
-            response=response,
+        ))
+
+
+class UserButtonLinkView(nextcord.ui.View):
+    def __init__(
+        self,
+        url: str,
+        emoji: Optional[str] = None,
+        label: Optional[str] = None,
+    ) -> None:
+        super().__init__(timeout=None, auto_defer=False)
+        self.add_item(nextcord.ui.Button(
+            style=nextcord.ButtonStyle.link,
+            url=url,
+            emoji=emoji,
+            label=label,
         ))
 
 
@@ -101,13 +117,11 @@ class UserButtonsCog(commands.Cog):
                 await inter.response.send_message(
                     f"Note: {note}",
                     allowed_mentions=nextcord.AllowedMentions.none(),
-                    components=[
-                        nextcord.ui.Button(
-                            style=nextcord.ButtonStyle.link,
-                            label=label,
-                            emoji=emoji,
-                        ),
-                    ],
+                    view=UserButtonLinkView(
+                        url=url,
+                        emoji=emoji,
+                        label=label,
+                    ),
                 )
             except Exception as exception:
                 await inter.response.send_message(
@@ -126,12 +140,12 @@ class UserButtonsCog(commands.Cog):
                 f"Note: {note}",
                 allowed_mentions=nextcord.AllowedMentions.none(),
                 view=UserButtonView(
+                    response=response,
                     style=nextcord.ButtonStyle(
                         style,
                     ),
                     emoji=emoji,
                     label=label,
-                    response=response,
                 ),
             )
         except Exception as exception:
@@ -139,6 +153,7 @@ class UserButtonsCog(commands.Cog):
                 f"Failed to reply with components: {exception.args[0]}",
                 ephemeral=True,
             )
+
 
 def setup(bot: NextityBot) -> None:
     bot.add_cog(UserButtonsCog(bot))
