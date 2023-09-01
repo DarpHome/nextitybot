@@ -118,9 +118,10 @@ class UserButtonsCog(commands.Cog):
                     f"Note: {note}",
                     allowed_mentions=nextcord.AllowedMentions.none(),
                     view=UserButtonLinkView(
+                        style=nextcord.ButtonStyle.link,
+                        label=label,
                         url=url,
                         emoji=emoji,
-                        label=label,
                     ),
                 )
             except Exception as exception:

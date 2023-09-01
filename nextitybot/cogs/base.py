@@ -4,6 +4,17 @@ from nextcord.ext import commands
 from ..core import NextityBot
 from typing import Callable, Optional
 
+
+class BotinfoView(nextcord.ui.View):
+    def __init__(self) -> None:
+        super().__init__(timeout=0.0)
+        self.add_item(nextcord.ui.Button(
+            style=nextcord.ButtonStyle.link,
+            url="https://github.com/DarpHome/nextitybot",
+            emoji="<:dh_github_octocat:1147138555202773062>",
+        ))
+
+
 class BaseCog(commands.Cog):
     bot: NextityBot
     def __init__(self, bot: NextityBot) -> None:
@@ -37,7 +48,7 @@ class BaseCog(commands.Cog):
         ).set_footer(
             text="NextityBot",
             icon_url=self.bot.user.display_avatar.url,
-        ), ephemeral=True)
+        ), view=BotinfoView(), ephemeral=True)
 
 
 def setup(bot: NextityBot) -> None:

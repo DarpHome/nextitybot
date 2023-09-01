@@ -39,15 +39,6 @@ class NextityBot(commands.AutoShardedBot):
         )
 
     @commands.Cog.listener()
-    async def on_connect(self) -> None:
-        self.add_all_application_commands()
-        await self.sync_application_commands()
-        self.presence_updater.start()
-
-    @commands.Cog.listener()
-    async def on_disconnect(self) -> None:
-        self.presence_updater.cancel()
-
-    @commands.Cog.listener()
     async def on_ready(self) -> None:
+        self.presence_updater.start()
         self.logger.info(f"Logged as {self.user.name}#{self.user.discriminator}!")
